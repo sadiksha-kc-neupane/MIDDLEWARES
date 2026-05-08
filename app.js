@@ -2,10 +2,9 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
-app.use((req, res) => {
-  let { query } = req.query;
-  console.log("query", query);
-  res.send("this is middleware");
+app.use((req, res, next) => {
+  console.log("this is middleware");
+  next();
 });
 
 app.get("/", (req, res) => {
