@@ -2,8 +2,15 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+// app.use((req, res, next) => {
+//   console.log("this is middleware");
+//   next();
+// });
+
+//logger- morgan
 app.use((req, res, next) => {
-  console.log("this is middleware");
+  req.time = new Date(Date.now().toString());
+  console.log(req.method, req.hostname, req.path, req.time);
   next();
 });
 
