@@ -36,8 +36,18 @@ app.get("/api", apiMiddleware, (req, res) => {
 });
 
 //this is a catch all route, it will be executed if no other route matches
-app.use((req, res) => {
-  res.status(404).send("Not Found");
+
+app.get("/err", (req, res) => {
+  hello = helloooo;
+});
+
+app.use((err, req, res, next) => {
+  console.log("----ERROR1------");
+  next(err);
+});
+
+app.use((err, req, res, next) => {
+  console.error("----ERROR2------");
 });
 
 app.listen(port, () => {
