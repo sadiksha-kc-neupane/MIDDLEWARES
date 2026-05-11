@@ -1,4 +1,5 @@
 const express = require("express");
+const ExpressError = require("./ExpressError");
 const app = express();
 const port = 3000;
 
@@ -24,9 +25,8 @@ const apiMiddleware = (req, res, next) => {
   let { token } = req.query;
   if (token === "12345") {
     next();
-  } else {
-    res.send("Access Denied");
   }
+  throw new ExpressError(401, "ACCESS DENIED");
 };
 
 app.get("/api", apiMiddleware, (req, res) => {
