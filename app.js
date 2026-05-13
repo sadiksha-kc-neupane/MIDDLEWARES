@@ -42,8 +42,13 @@ app.get("/err", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  let { status, message } = err;
+  let { status = 500, message = "some error occured" } = err;
   res.status(status).send(message);
+});
+
+//this is a route that will throw an error with status code 403 and message "Access to admin is forbidden"
+app.get("/admin", (req, res) => {
+  throw new ExpressError(403, "Access to admin is forbidden");
 });
 
 // app.use((err, req, res, next) => {
