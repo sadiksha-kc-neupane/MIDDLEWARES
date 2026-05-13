@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
 const apiMiddleware = (req, res, next) => {
   let { token } = req.query;
   if (token === "12345") {
-    next();
+    return next();
   }
   throw new ExpressError(401, "ACCESS DENIED");
 };
@@ -42,13 +42,13 @@ app.get("/err", (req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log("----ERROR1------");
-  next(err);
+  let { status, message } = err;
+  res.status(status).send(message);
 });
 
-app.use((err, req, res, next) => {
-  console.error("----ERROR2------");
-});
+// app.use((err, req, res, next) => {
+//   console.error("----ERROR2------");
+// });
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
